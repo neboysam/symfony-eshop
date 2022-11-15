@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony E-Shop - Mon compte{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7 mx-auto">
+            {% if notification %}
+                <div class="alert alert-primary text-center" role="alert">
+                    {{ notification }}
+                </div>
+            {% endif %}
+            
+            <h1 class="text-center">Mon compte</h1>
+            <p>Bienvenue {{ app.user.firstname|capitalize }} dans votre compte.
+            <p>Dans cette espace vous pouvez gérer toutes vos informations personnelles.</p>
+            <hr>
+            <ul>
+                <li><a href="{{ path('app_modify_password') }}">Modifier mon mot de passe</a></li>
+                <li>Ajouter mes adresse</li>
+                <li>Mes commandes</li>
+            </ul>
+            <hr>
+        </div>
+    </div>
+{% endblock %}
