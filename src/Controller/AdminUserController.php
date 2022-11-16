@@ -16,7 +16,7 @@ class AdminUserController extends AbstractController
     {
         $loggedInUser = $this->getUser();
         $users = $repository->findAll();
-        return $this->render('admin_user/index.html.twig', [
+        return $this->render('admin_user/admin_user.html.twig', [
             'users' => $users,
             'loggedInUser' => $loggedInUser
         ]);
