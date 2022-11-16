@@ -3,5 +3,51 @@
 {% block title %}Symfony E-Shop - Administration{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Administration</h1>
+    <h1 class="text-center mb-5">Administration</h1>
+    
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="card mr-5">
+                <div class="card-header">
+                    Utilisateurs
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Il y a <strong>{{ userNumber }}</strong> utilisateurs dans la base de donnees</p>
+                    <a href="{{ path('app_admin_users') }}" class="btn btn-primary">Utilisateurs</a>
+                </div>
+            </div>        
+            <div class="card">
+                <div class="card-header">
+                    Categories
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <div class="card mr-5">
+                <div class="card-header">
+                    Produits
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Produits</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Transporteurs
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Transporteurs</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
