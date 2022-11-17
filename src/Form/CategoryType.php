@@ -22,7 +22,7 @@ class CategoryType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Ajouter",
+                'label' => "Enregistrer",
                 'attr' => [
                     'class' => 'btn btn-primary btn-block'
                 ] 

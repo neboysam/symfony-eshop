@@ -18,12 +18,12 @@
                         <th scope="row">{{ category.id }}</th>
                         <td>{{ category.name }}</td>
                         <td>
-                            <a href="" class="btn btn-sm btn-success">Modifier</a>
-                            <a href="" class="btn btn-sm btn-danger">Supprimer</a>
+                            <a href="{{ path('app_admin_update_category', {'id': category.id}) }}" class="btn btn-sm btn-success">Modifier</a>
+                            <a href="{{ path('app_admin_remove_category', {'id': category.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('app_admin_ajouter_categorie') }}" class="btn btn-primary mb-4">Ajouter categorie</a>
+        <a href="{{ path('app_admin_add_category') }}" class="btn btn-primary mb-4">Ajouter categorie</a>
 {% endblock %}
