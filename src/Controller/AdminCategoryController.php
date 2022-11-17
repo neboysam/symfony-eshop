@@ -34,6 +34,7 @@ class AdminCategoryController extends AbstractController
      */
     public function add(Request $request): Response
     {
+        $message1 = 'Ajouter une categorie';
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -44,8 +45,10 @@ class AdminCategoryController extends AbstractController
             return $this->redirectToRoute('app_admin_categories');
         }
 
-        return $this->render('admin_category/admin_category_add.html.twig', [
-            'form' => $form->createView()
+        return $this->render('admin_category/admin_category_manage.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category,
+            'message1' => $message1
         ]);
     }
 
@@ -54,6 +57,7 @@ class AdminCategoryController extends AbstractController
      */
     public function update($id, Request $request): Response
     {
+        $message2 = 'Modifier la categorie';
         $category = $this->entityManager->getRepository(Category::class)->findOneById($id);
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -63,9 +67,10 @@ class AdminCategoryController extends AbstractController
             return $this->redirectToRoute('app_admin_categories');
         }
 
-        return $this->render('admin_category/admin_category_update.html.twig', [
+        return $this->render('admin_category/admin_category_manage.html.twig', [
             'form' => $form->createView(),
-            'category' => $category
+            'category' => $category,
+            'message2' => $message2
         ]);
     }
 
