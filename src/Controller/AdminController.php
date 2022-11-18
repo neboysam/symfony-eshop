@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Product;
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +25,11 @@ class AdminController extends AbstractController
     {
         $userNumber = $this->entityManager->getRepository(User::class)->countUsers();
         $categoryNumber = $this->entityManager->getRepository(Category::class)->countCategories();
+        $productNumber = $this->entityManager->getRepository(Product::class)->countProducts();
         return $this->render('admin/index.html.twig', [
             'userNumber' => $userNumber,
-            'categoryNumber' => $categoryNumber
+            'categoryNumber' => $categoryNumber,
+            'productNumber' => $productNumber
         ]);
     }
 }

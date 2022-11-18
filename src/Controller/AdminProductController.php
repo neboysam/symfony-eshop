@@ -41,7 +41,7 @@ class AdminProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stringToSlug = $product->getSlug();
+            $stringToSlug = $product->getName();
             $slug = $createSlug->createSlug($stringToSlug);
             $product->setSlug($slug);
             $this->entityManager->persist($product);

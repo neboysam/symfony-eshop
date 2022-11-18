@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony E-Shop - Produits{% endblock %}
+
+{% block content %}
+    {% for product in products %}
+        {{ product }}
+    {% endfor %}
+{% endblock %}
