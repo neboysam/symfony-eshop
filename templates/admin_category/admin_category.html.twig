@@ -13,9 +13,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for category in categories %}
+                {% for key, category in categories %}
                     <tr>
-                        <th scope="row">{{ category.id }}</th>
+                        <th scope="row">{{ key+1 }}</th>
                         <td>{{ category.name }}</td>
                         <td>
                             <a href="{{ path('app_admin_update_category', {'id': category.id}) }}" class="btn btn-sm btn-success">Modifier</a>

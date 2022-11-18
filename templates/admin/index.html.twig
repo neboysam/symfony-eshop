@@ -21,7 +21,7 @@
                     Categories
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Il y a <strong>{{ categoryNumber }}</strong> utilisateurs dans la base de données</p>
+                    <p class="card-text">Il y a <strong>{{ categoryNumber }}</strong> categories dans la base de données</p>
                     <a href="{{ path('app_admin_categories') }}" class="btn btn-primary">Categories</a>
                 </div>
             </div>
@@ -30,9 +30,8 @@
                     Produits
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a.</p>
-                    <a href="#" class="btn btn-primary">Produits</a>
+                    <p class="card-text">Il y a <strong>{{ categoryNumber }}</strong> produits dans la base de données</p>
+                    <a href="{{ path('app_admin_products') }}" class="btn btn-primary">Produits</a>
                 </div>
             </div>
         </div>
