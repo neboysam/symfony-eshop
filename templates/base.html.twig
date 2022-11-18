@@ -126,14 +126,14 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing {% if block('carousel') is not defined %}mt-4{% endif %}">
+    <div class="container {% if block('carousel') is not defined %}mt-4{% endif %}">
         {% block content %}{% endblock %}
     </div><!-- /.container -->
 
     <!-- FOOTER -->
-    <footer class="container">
+    <footer class="container-fluid">
         <div class="row">
-            <div class="col-md-7 mx-auto">
+            <div class="col-md-8 mx-auto">
                 <p class="float-right"><a href="#">Back to top</a></p>
                 <p>&copy; 2022 Symfony E-Shop</p>
             </div>
