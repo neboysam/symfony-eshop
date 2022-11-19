@@ -24,10 +24,10 @@ class Category
      */
     private $name;
 
-    public function __toString()
+    /* public function __toString()
     {
         return $this->getName();
-    }
+    } */
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")

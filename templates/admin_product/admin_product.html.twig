@@ -14,7 +14,17 @@
                 <th scope="col">Subtitle</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
-                <th scope="col">Category</th>
+                {# <th scope="col">Category</th> #}
+                <th scope="col">Category
+                    <form>
+                        <select id="category">
+                            <option selected="">Choisir la categorie</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -28,7 +38,7 @@
                     <td class="col-1">{{ product.subtitle|slice(0, 40) ~ '...' }}</td>
                     <td class="col-2">{{ product.description|slice(0, 100) ~ '...' }}</td>
                     <td>{{ product.price }}</td>
-                    <td>{{ product.category }}</td>
+                    <td>{{ product.category.name }}</td>
                     <td class="col-2">
                         <a href="{{ path('app_admin_update_product', {'id': product.id}) }}" class="btn btn-sm btn-success">Modifier</a>
                         <a href="{{ path('app_admin_remove_product', {'id': product.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
@@ -46,4 +56,22 @@
         </tbody>
     </table>
     <a href="{{ path('app_admin_add_product') }}" class="btn btn-primary mb-4">Ajouter un produit</a>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+
+        var category = document.getElementById("category");
+        var categoryId = category.value;
+        /* category.addEventListener("click", function() {
+            var categoryId = category.value;
+            //axios.post("{{ path('app_admin_products_category', {'categoryId':" . categoryId . "}) }}");
+            axios.post(`https://localhost/administration/produits/categorie/${categoryId}`);
+        }); */
+        const productsByCategory = async (categoryId) => {
+            const res = await axios.get("{{ path('app_admin_products_category', {'categoryId':" . categoryId . "}) }}");
+            console.log(res.data);
+        }
+        productsByCategory();
+    </script>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\ProductType;
 use App\HelperClasses\CreateSlug;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,9 +25,11 @@ class AdminProductController extends AbstractController
      */
     public function index(): Response
     {
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
         $products = $this->entityManager->getRepository(Product::class)->findAll();
         return $this->render('admin_product/admin_product.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 
@@ -87,5 +90,18 @@ class AdminProductController extends AbstractController
         $this->entityManager->remove($product);
         $this->entityManager->flush();
         return $this->redirectToRoute('app_admin_products');
+    }
+
+    /**
+     * @Route("/administration/produits/categorie/{categoryId}", name="app_admin_products_category")
+     */
+    public function axios($categoryId): Response
+    {
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $products = $this->entityManager->getRepository(Product::class)->productsByCategory($categoryId);
+        return $this->render('admin_product/admin_product.html.twig', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
     }
 }
