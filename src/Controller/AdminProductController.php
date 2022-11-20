@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminProductController extends AbstractController
 {
@@ -93,15 +94,24 @@ class AdminProductController extends AbstractController
     }
 
     /**
-     * @Route("/administration/produits/categorie/{categoryId}", name="app_admin_products_category")
+     * @Route("/administration/produits/categorie/{categoryId}", name="app_admin_products_category", options={"expose"=true})
      */
-    public function axios($categoryId): Response
+    public function ajax($categoryId): Response
     {
-        $categories = $this->entityManager->getRepository(Category::class)->findAll();
-        $products = $this->entityManager->getRepository(Product::class)->productsByCategory($categoryId);
-        return $this->render('admin_product/admin_product.html.twig', [
-            'products' => $products,
-            'categories' => $categories
-        ]);
+        $productsData = $this->entityManager->getRepository(Product::class)->productsByCategory($categoryId);
+        $productsJson = [];
+
+        foreach($productsData as $key => $product) {
+            $productsJson[$key]['id'] = $product->getId();
+            $productsJson[$key]['name'] = $product->getName();
+            $productsJson[$key]['slug'] = $product->getSlug();
+            $productsJson[$key]['image'] = $product->getImage();
+            $productsJson[$key]['subtitle'] = $product->getSubtitle();
+            $productsJson[$key]['description'] = $product->getDescription();
+            $productsJson[$key]['price'] = $product->getPrice();
+            $productsJson[$key]['categoryName'] = $product->getCategory()->getName();
+        }
+        $products = new JsonResponse($productsJson);
+        return $products;
     }
 }

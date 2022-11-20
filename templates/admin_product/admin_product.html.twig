@@ -15,12 +15,12 @@
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
                 {# <th scope="col">Category</th> #}
-                <th scope="col">Category
+                <th scope="col">
                     <form>
                         <select id="category">
-                            <option selected="">Choisir la categorie</option>
+                            <option selected>Choisir la categorie</option>
                             {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                <option value="{{ category.id }}" data-path="{{ path('app_admin_products_category', {'categoryId': category.id }) }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </form>
@@ -32,13 +32,13 @@
             {% for key, product in products %}
                 <tr>
                     <th scope="row">{{ key+1 }}</th>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.slug }}</td>
-                    <td class="col-2"><img src="{{asset('images/products/' ~ product.image)}}" class="img-fluid product-image"></td>
-                    <td class="col-1">{{ product.subtitle|slice(0, 40) ~ '...' }}</td>
-                    <td class="col-2">{{ product.description|slice(0, 100) ~ '...' }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.category.name }}</td>
+                    <td id="name">{{ product.name }}</td>
+                    <td id="slug">{{ product.slug }}</td>
+                    <td id="image" class="col-2"><img src="{{asset('images/products/' ~ product.image)}}" class="img-fluid product-image"></td>
+                    <td id="subtitle" class="col-1">{{ product.subtitle|slice(0, 40) ~ '...' }}</td>
+                    <td id="description" class="col-2">{{ product.description|slice(0, 100) ~ '...' }}</td>
+                    <td id="price">{{ product.price }}</td>
+                    <td id="categoryName">{{ product.category.name }}</td>
                     <td class="col-2">
                         <a href="{{ path('app_admin_update_product', {'id': product.id}) }}" class="btn btn-sm btn-success">Modifier</a>
                         <a href="{{ path('app_admin_remove_product', {'id': product.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
@@ -59,19 +59,49 @@
 {% endblock %}
 {% block javascripts %}
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-    <script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
+    <script>
+        var name = document.getElementById("name");
+        var slug = document.getElementById("slug");
+        var image = document.getElementById("image");
+        var subtitle = document.getElementById("subtitle");
+        var description = document.getElementById("description");
+        var price = document.getElementById("price");
+        var categoryName = document.getElementById("categoryName");
         var category = document.getElementById("category");
-        var categoryId = category.value;
-        /* category.addEventListener("click", function() {
+
+        /* category.addEventListener("change", function() {
             var categoryId = category.value;
-            //axios.post("{{ path('app_admin_products_category', {'categoryId':" . categoryId . "}) }}");
-            axios.post(`https://localhost/administration/produits/categorie/${categoryId}`);
+            //console.log(categoryId);
+        }) */
+
+        /* category.addEventListener("change", function() {
+            var categoryId = category.value;
+            fetch("{{ path('app_admin_products_category', {'categoryId':" . categoryId . "}) }}")           
+            .then((res) => {
+                console.log("Resolved", res);
+                res.json().then((data) => console.log(data));
+            })
+            .catch((e) => {
+                console.log("Error", e);
+            })
         }); */
-        const productsByCategory = async (categoryId) => {
-            const res = await axios.get("{{ path('app_admin_products_category', {'categoryId':" . categoryId . "}) }}");
-            console.log(res.data);
-        }
-        productsByCategory();
+        
+        category.addEventListener("change", function() {
+            var categoryId = category.value;
+            //console.log(categoryId); OK
+            const productsByCategory = async (categoryId) => {
+                try {
+                    var url = Routing.generate('app_admin_products_category', {categoryId: categoryId});
+                    const res = await axios.get(url);
+                    console.log("Resolved!", res.data);
+                } catch(e) {
+                    console.log("Error", e);
+                }                
+            }
+            productsByCategory(categoryId);
+        })
     </script>
 {% endblock %}
